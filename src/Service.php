@@ -5,16 +5,41 @@ declare(strict_types=1);
 namespace TransliterationReplacer;
 
 use TransliterationReplacer\Dictionaries\Factory;
+use TransliterationReplacer\Dictionaries\CharsDictionaryInterface;
 
 class Service
 {
+    /**
+     * @var string
+     */
     private $text;
 
-    private $target;
-
+    /**
+     * @var array
+     */
     private $result;
 
+    /**
+     * @var CharsDictionaryInterface
+     */
     private $dictionary;
+
+    /**
+     * @var Correcter
+     */
+    private $correcter;
+
+    /**
+     * @var Detecter
+     */
+    private $detecter;
+
+    public function __construct()
+    {
+        $this->correcter = new Correcter();
+        $this->detecter = new Detecter();
+        $this->dictionary = Factory::getEngCharsDictionary();
+    }
 
     /**
      * @param string $text
@@ -30,12 +55,12 @@ class Service
      */
     public function getCorrectedText(): string
     {
-        return '';
+        return $this->correcter->getCorrectedText($this->text, $this->dictionary);
     }
 
-    public function detect(): void
+    public function detect(): array
     {
-        
+        return $this->detecter->detect($this->text, $this->dictionary);
     }
 
     public function setEngCharsAsTarget(): void

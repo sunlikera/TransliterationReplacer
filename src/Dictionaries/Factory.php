@@ -7,17 +7,17 @@ namespace TransliterationReplacer\Dictionaries;
 class Factory
 {
     /**
-     * @return EngCharsDictionary
+     * @return CharsDictionaryInterface
      */
-    public static function getEngCharsDictionary(): EngCharsDictionary
+    public static function getEngCharsDictionary(): CharsDictionaryInterface
     {
         return new EngCharsDictionary();
     }
 
     /**
-     * @return RusCharsDictionary
+     * @return CharsDictionaryInterface
      */
-    public static function getRusCharsDictionary(): RusCharsDictionary
+    public static function getRusCharsDictionary(): CharsDictionaryInterface
     {
         return new RusCharsDictionary();
     }
