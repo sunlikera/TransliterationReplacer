@@ -1,0 +1,17 @@
+{
+    "name": "sunlikera/transliteration-replacer",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "TransliterationReplacer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Amosov Stas",
+            "email": "amosov-stas@mail.ru"
+        }
+    ],
+    "require": {}
+}
