@@ -4,24 +4,26 @@ declare(strict_types=1);
 
 namespace TransliterationReplacer;
 
-use TransliterationReplacer\Dictionaries\CharsDictionaryInterface;
+use TransliterationReplacer\Detecter\DetectedResult;
 
 class Correcter
 {
-    public function getCorrectedText(string $text, CharsDictionaryInterface $dictionary): string
+    /**
+     * @param string $text
+     * @param DetectedResult $detected
+     * @return string
+     */
+	public function getCorrectedText(string $text, DetectedResult $detected): string
     {
-        $result = '';
+        $detectedResult = $detected->getResult();
+        $mistakes = [];
+        $correctChars = [];
 
-        for ($i = 0, $length = strlen($text); $i < $length; $i++) {
-            $char = $text[$i];
-
-            if ($correctChar = $dictionary::getCharsMap()[$char]) {
-                $char = $correctChar;
-            }
-
-            $result .= $char;
+        foreach ($detectedResult as $item) {
+            $mistakes[] = $item['char'];
+            $correctChars[] = $item['correct'];
         }
 
-        return $result;
+        return str_replace($mistakes, $correctChars, $text);
     }
 }

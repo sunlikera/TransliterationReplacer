@@ -6,6 +6,8 @@ namespace TransliterationReplacer;
 
 use TransliterationReplacer\Dictionaries\Factory;
 use TransliterationReplacer\Dictionaries\CharsDictionaryInterface;
+use TransliterationReplacer\Detecter\Detecter;
+use TransliterationReplacer\Detecter\DetectedResult;
 
 class Service
 {
@@ -15,9 +17,9 @@ class Service
     private $text;
 
     /**
-     * @var array
+     * @var DetectedResult
      */
-    private $result;
+    private $detectedResult;
 
     /**
      * @var CharsDictionaryInterface
@@ -55,12 +57,28 @@ class Service
      */
     public function getCorrectedText(): string
     {
-        return $this->correcter->getCorrectedText($this->text, $this->dictionary);
+        if (empty($this->detectedResult)) {
+            $this->detect();
+        }
+
+        return $this->correcter->getCorrectedText($this->text, $this->detectedResult);
     }
 
-    public function detect(): array
+    private function detect(): void
     {
-        return $this->detecter->detect($this->text, $this->dictionary);
+        $this->detectedResult = $this->detecter->detect($this->text, $this->dictionary);
+    }
+
+    /**
+     * @return DetectedResult
+     */
+    public function getDetectedResult(): DetectedResult
+    {
+        if (empty($this->detectedResult)) {
+            $this->detect();
+        }
+
+        return $this->detectedResult;
     }
 
     public function setEngCharsAsTarget(): void

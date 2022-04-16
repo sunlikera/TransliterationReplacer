@@ -2,13 +2,18 @@
 
 declare(strict_types=1);
 
-namespace TransliterationReplacer;
+namespace TransliterationReplacer\Detecter;
 
 use TransliterationReplacer\Dictionaries\CharsDictionaryInterface;
 
 class Detecter
 {
-    public function detect(string $text, CharsDictionaryInterface $dictionary): array
+    /**
+     * @param string $text
+     * @param CharsDictionaryInterface $dictionary
+     * @return DetectedResult
+     */
+    public function detect(string $text, CharsDictionaryInterface $dictionary): DetectedResult
     {
         $result = [];
 
@@ -19,10 +24,11 @@ class Detecter
                 $result[] = [
                     'index' => $i,
                     'char' => $char,
+                    'correct' => $correctChar,
                 ];
             }
         }
 
-        return $result;
+        return new DetectedResult($result);
     }
 }

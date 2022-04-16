@@ -19,7 +19,7 @@ $text = 'Привeт, как дeлa';
 $transliterationReplacer->setText($text);
 $transliterationReplacer->setEngCharsAsTarget();
 
-$detected = $transliterationReplacer->detect();
+$detected = $transliterationReplacer->getDetectedResult();
 /*
 Array
 (
@@ -27,20 +27,22 @@ Array
         (
             [index] => 8
             [char] => e
+            [correct] => е
         )
 
     [1] => Array
         (
             [index] => 22
             [char] => e
+            [correct] => е
         )
 
     [2] => Array
         (
             [index] => 25
             [char] => a
+            [correct] => а
         )
-
 )
 */
 
